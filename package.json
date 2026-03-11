@@ -1,0 +1,45 @@
+{
+  "name": "pertecard",
+  "version": "1.0.0",
+  "description": "PWA Loyalty Card System - Te Card",
+  "main": "backend/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "cd backend && node server.js",
+    "dev": "cd backend && nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo \"Building PWA...\"",
+    "serve": "npx http-server public -p 8000",
+    "deploy": "git push origin main"
+  },
+  "keywords": [
+    "pwa",
+    "loyalty-card",
+    "supermercato",
+    "gemini-ai",
+    "supabase",
+    "offline-first"
+  ],
+  "author": "Pertemarket",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pertemarket/pertecard.git"
+  },
+  "homepage": "https://pertemarket.it",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "@supabase/supabase-js": "^2.38.4",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}
