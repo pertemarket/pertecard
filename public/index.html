@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Te Card - Loyalty Card PWA">
+    <meta name="theme-color" content="#0d1333">
+    <title>Te Card - Carta Fedeltà</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/images/icon-192x192.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div id="app">
+        <!-- SCHERMATA DI CARICAMENTO -->
+        <div id="loadingScreen" class="screen active">
+            <div class="loader"></div>
+            <p>Caricamento in corso...</p>
+        </div>
+
+        <!-- SCHERMATA DI LOGIN -->
+        <div id="loginScreen" class="screen">
+            <div class="login-container">
+                <!-- Logo Placeholder -->
+                <div class="logo-container">
+                    <img id="logoImg" src="/assets/images/logo-placeholder.svg" alt="Te Card Logo" class="logo">
+                </div>
+
+                <h1>Te Card</h1>
+                <p class="subtitle">Carta Fedeltà</p>
+
+                <!-- Form Login -->
+                <form id="loginForm" class="form">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" name="email" required placeholder="tue@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" name="password" required placeholder="••••••••">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Accedi</button>
+                </form>
+
+                <!-- Link Registrazione -->
+                <p class="form-footer">
+                    Non hai un account? <a href="#" onclick="showRegister()">Registrati</a>
+                </p>
+
+                <!-- Link Admin -->
+                <p class="form-footer-admin">
+                    <a href="/admin/index.html" class="link-admin">Accesso Amministratore</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- SCHERMATA DI REGISTRAZIONE -->
+        <div id="registerScreen" class="screen">
+            <div class="register-container">
+                <h1>Crea Account</h1>
+
+                <form id="registerForm" class="form">
+                    <div class="form-group">
+                        <label for="registerName">Nome</label>
+                        <input type="text" id="registerName" name="name" required placeholder="Mario">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerSurname">Cognome</label>
+                        <input type="text" id="registerSurname" name="surname" required placeholder="Rossi">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" name="email" required placeholder="tue@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" name="password" required placeholder="••••••••">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerPassword2">Conferma Password</label>
+                        <input type="password" id="registerPassword2" name="password2" required placeholder="••••••••">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Registrati</button>
+                </form>
+
+                <p class="form-footer">
+                    Hai già un account? <a href="#" onclick="showLogin()">Accedi</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- SCHERMATA PRINCIPALE UTENTE -->
+        <div id="userScreen" class="screen">
+            <header class="app-header">
+                <h1>Te Card</h1>
+                <button id="logoutBtn" class="btn-icon">Esci</button>
+            </header>
+
+            <main class="app-main">
+                <!-- Benvenuto -->
+                <div class="welcome-section">
+                    <p id="welcomeText">Benvenuto!</p>
+                </div>
+
+                <!-- CARTA FEDELTÀ PRINCIPALE -->
+                <div class="card-section">
+                    <div id="loyaltyCard" class="loyalty-card" onclick="showCardCode()">
+                        <div class="card-logo">
+                            <img id="cardLogoImg" src="/assets/images/logo-placeholder.svg" alt="Logo">
+                        </div>
+                        <div class="card-content">
+                            <p class="card-label">Carta Fedeltà</p>
+                            <p id="cardName" class="card-name">Nome Cognome</p>
+                        </div>
+                        <p class="card-tap">Tocca per mostrare codice</p>
+                    </div>
+                </div>
+
+                <!-- MODALE CODICE BARCODE -->
+                <div id="barcodeModal" class="modal hidden">
+                    <div class="modal-content barcode-modal">
+                        <button class="modal-close" onclick="closeBarcodeModal()">✕</button>
+                        
+                        <div class="barcode-container">
+                            <div class="barcode-background"></div>
+                            <div id="barcodeDisplay" class="barcode-display">
+                                <p id="ean13Code">1234567890123</p>
+                            </div>
+                        </div>
+
+                        <p class="barcode-hint">Pronto per la scansione</p>
+                    </div>
+                </div>
+
+                <!-- PUNTI SEZIONE -->
+                <div id="pointsSection" class="points-section">
+                    <div class="points-card">
+                        <p class="points-label">Punti Disponibili</p>
+                        <p id="pointsTotal" class="points-total">0</p>
+                        <p class="points-hint">Accedi in cassa per guadagnare punti</p>
+                    </div>
+                </div>
+
+                <!-- MENU INFERIORE -->
+                <nav class="bottom-nav">
+                    <button class="nav-item active" onclick="showTab('home')">
+                        <span class="icon">🏠</span>
+                        <span>Home</span>
+                    </button>
+                    <button class="nav-item" onclick="showTab('history')">
+                        <span class="icon">📋</span>
+                        <span>Storico</span>
+                    </button>
+                    <button class="nav-item" onclick="showTab('profile')">
+                        <span class="icon">👤</span>
+                        <span>Profilo</span>
+                    </button>
+                </nav>
+            </main>
+        </div>
+    </div>
+
+    <!-- Service Worker Registration -->
+    <script src="/js/pwa.js"></script>
+    
+    <!-- App Main Script -->
+    <script src="/js/app.js"></script>
+</body>
+</html>
