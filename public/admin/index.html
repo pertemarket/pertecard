@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Te Card - Admin Panel">
+    <meta name="theme-color" content="#0d1333">
+    <title>Te Card - Admin Panel</title>
+    
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+    
+    <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+    <div id="adminApp">
+        <!-- SCHERMATA LOGIN ADMIN -->
+        <div id="adminLoginScreen" class="screen active">
+            <div class="admin-login-container">
+                <div class="admin-logo">
+                    <img id="adminLogoImg" src="/assets/images/logo-placeholder.svg" alt="Te Card">
+                </div>
+                <h1>Te Card Admin</h1>
+                <p class="subtitle">Pannello di Amministrazione</p>
+
+                <form id="adminLoginForm" class="form">
+                    <div class="form-group">
+                        <label for="adminEmail">Email</label>
+                        <input type="email" id="adminEmail" required placeholder="admin@tecard.it">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword">Password</label>
+                        <input type="password" id="adminPassword" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Accedi</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- DASHBOARD ADMIN -->
+        <div id="adminDashboard" class="screen">
+            <!-- HEADER ADMIN -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <h1>Te Card Admin</h1>
+                </div>
+                <div class="header-right">
+                    <span id="adminUserEmail" class="admin-user">admin@tecard.it</span>
+                    <button id="adminLogoutBtn" class="btn-icon">Esci</button>
+                </div>
+            </header>
+
+            <!-- SIDEBAR MENU -->
+            <div class="admin-container">
+                <aside class="admin-sidebar">
+                    <nav class="admin-menu">
+                        <button class="menu-item active" onclick="switchAdminTab('dashboard')">
+                            <span class="icon">📊</span>
+                            <span>Dashboard</span>
+                        </button>
+                        <button class="menu-item" onclick="switchAdminTab('customers')">
+                            <span class="icon">👥</span>
+                            <span>Clienti</span>
+                        </button>
+                        <button class="menu-item" onclick="switchAdminTab('colors')">
+                            <span class="icon">🎨</span>
+                            <span>Colori</span>
+                        </button>
+                        <button class="menu-item" onclick="switchAdminTab('workshop')">
+                            <span class="icon">🛠️</span>
+                            <span>Workshop IA</span>
+                        </button>
+                        <button class="menu-item" onclick="switchAdminTab('versions')">
+                            <span class="icon">📦</span>
+                            <span>Versioni</span>
+                        </button>
+                        <button class="menu-item" onclick="switchAdminTab('test')">
+                            <span class="icon">🧪</span>
+                            <span>Test Area</span>
+                        </button>
+                        <button class="menu-item" onclick="switchAdminTab('settings')">
+                            <span class="icon">⚙️</span>
+                            <span>Impostazioni</span>
+                        </button>
+                    </nav>
+                </aside>
+
+                <!-- CONTENUTO PRINCIPALE -->
+                <main class="admin-main">
+
+                    <!-- TAB: DASHBOARD -->
+                    <div id="dashboardTab" class="admin-tab active">
+                        <div class="tab-header">
+                            <h2>Dashboard</h2>
+                        </div>
+                        <div class="dashboard-grid">
+                            <div class="stat-card">
+                                <p class="stat-label">Clienti Totali</p>
+                                <p id="statTotalCustomers" class="stat-value">0</p>
+                            </div>
+                            <div class="stat-card">
+                                <p class="stat-label">Punti Totali</p>
+                                <p id="statTotalPoints" class="stat-value">0</p>
+                            </div>
+                            <div class="stat-card">
+                                <p class="stat-label">Ultimato Aggiornamento</p>
+                                <p id="statLastUpdate" class="stat-value">--:--</p>
+                            </div>
+                            <div class="stat-card">
+                                <p class="stat-label">Versione</p>
+                                <p id="statVersion" class="stat-value">1.0.0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: CLIENTI -->
+                    <div id="customersTab" class="admin-tab">
+                        <div class="tab-header">
+                            <h2>Gestione Clienti</h2>
+                            <button class="btn btn-small" onclick="openCustomerModal()">+ Nuovo Cliente</button>
+                        </div>
+
+                        <div class="customers-list">
+                            <div class="table-container">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Email</th>
+                                            <th>EAN13</th>
+                                            <th>Punti</th>
+                                            <th>Sezione Punti</th>
+                                            <th>Azioni</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="customersTableBody">
+                                        <!-- Righe dinamiche -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: COLORI -->
+                    <div id="colorsTab" class="admin-tab">
+                        <div class="tab-header">
+                            <h2>Personalizzazione Colori</h2>
+                        </div>
+
+                        <div class="colors-panel">
+                            <div class="color-section">
+                                <h3>Colore Primario (Navy)</h3>
+                                <div class="color-input-group">
+                                    <input type="text" id="colorPrimary" value="#0d1333" class="color-code-input">
+                                    <input type="color" id="colorPrimaryPicker" value="#0d1333" class="color-picker">
+                                    <div id="colorPrimaryPreview" class="color-preview"></div>
+                                    <button class="btn btn-small" onclick="saveColors()">Salva</button>
+                                </div>
+                            </div>
+
+                            <div class="color-section">
+                                <h3>Colore Accento (Gold)</h3>
+                                <div class="color-input-group">
+                                    <input type="text" id="colorAccent" value="#D6a651" class="color-code-input">
+                                    <input type="color" id="colorAccentPicker" value="#D6a651" class="color-picker">
+                                    <div id="colorAccentPreview" class="color-preview"></div>
+                                    <button class="btn btn-small" onclick="saveColors()">Salva</button>
+                                </div>
+                            </div>
+
+                            <div class="color-section">
+                                <h3>Colore Sfondo (White)</h3>
+                                <div class="color-input-group">
+                                    <input type="text" id="colorBackground" value="#ffffff" class="color-code-input">
+                                    <input type="color" id="colorBackgroundPicker" value="#ffffff" class="color-picker">
+                                    <div id="colorBackgroundPreview" class="color-preview"></div>
+                                    <button class="btn btn-small" onclick="saveColors()">Salva</button>
+                                </div>
+                            </div>
+
+                            <!-- ANTEPRIMA SIMULATA -->
+                            <div class="preview-section">
+                                <h3>Anteprima Area Utente</h3>
+                                <div class="user-preview">
+                                    <div class="preview-header">Te Card</div>
+                                    <div class="preview-card">
+                                        <p>Carta Fedeltà</p>
+                                        <p class="preview-name">Mario Rossi</p>
+                                    </div>
+                                    <div class="preview-points">
+                                        <p>Punti Disponibili</p>
+                                        <p class="preview-points-value">1.250</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: WORKSHOP IA -->
+                    <div id="workshopTab" class="admin-tab">
+                        <div class="tab-header">
+                            <h2>Workshop IA</h2>
+                        </div>
+
+                        <!-- SEZIONE GEMINI API -->
+                        <div class="workshop-section">
+                            <h3>Configurazione Gemini API</h3>
+                            <div class="form-group">
+                                <label for="geminiApiKey">API Key Gemini</label>
+                                <input type="password" id="geminiApiKey" placeholder="AIza...">
+                                <button class="btn btn-small" onclick="saveGeminiKey()">Salva API Key</button>
+                            </div>
+                        </div>
+
+                        <!-- CHAT IA -->
+                        <div class="workshop-section">
+                            <h3>Chat con IA</h3>
+                            <div id="iaChatContainer" class="chat-container">
+                                <div id="iaChatMessages" class="chat-messages">
+                                    <!-- Messaggi dinamici -->
+                                </div>
+                                <form id="iaChatForm" class="chat-input-form" onsubmit="sendIAMessage(event)">
+                                    <textarea id="iaChatInput" placeholder="Scrivi il tuo comando..." rows="3"></textarea>
+                                    <button type="submit" class="btn btn-primary">Invia</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- CRONOLOGIA CONVERSAZIONI -->
+                        <div class="workshop-section">
+                            <h3>Cronologia Conversazioni</h3>
+                            <div id="conversationHistory" class="conversation-list">
+                                <!-- Lista dinamica -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: VERSIONI -->
+                    <div id="versionsTab" class="admin-tab">
+                        <div class="tab-header">
+                            <h2>Gestione Versioni</h2>
+                        </div>
+
+                        <div class="versions-container">
+                            <div class="versions-section">
+                                <h3>Ultime 10 Versioni Modificate</h3>
+                                <div id="modifiedVersionsList" class="versions-list">
+                                    <!-- Versioni dinamiche -->
+                                </div>
+                            </div>
+
+                            <div class="versions-section">
+                                <h3>Ultime 5 Versioni Stabili</h3>
+                                <div id="stableVersionsList" class="versions-list">
+                                    <!-- Versioni stabili -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: TEST AREA -->
+                    <div id="testTab" class="admin-tab">
+                        <div class="tab-header">
+                            <h2>Area Test</h2>
+                        </div>
+
+                        <div class="test-container">
+                            <div class="test-section">
+                                <h3>Test Area Utente</h3>
+                                <iframe id="userPreviewFrame" src="/index.html" class="test-iframe"></iframe>
+                            </div>
+
+                            <div class="test-section">
+                                <h3>Test Area Admin</h3>
+                                <button class="btn btn-primary" onclick="openAdminTestWindow()">Apri in Nuova Finestra</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: IMPOSTAZIONI -->
+                    <div id="settingsTab" class="admin-tab">
+                        <div class="tab-header">
+                            <h2>Impostazioni</h2>
+                        </div>
+
+                        <div class="settings-container">
+                            <div class="settings-section">
+                                <h3>Logo Aziendale</h3>
+                                <div class="logo-upload">
+                                    <input type="file" id="logoUpload" accept="image/*" onchange="uploadLogo()">
+                                    <p>o incolla link esterno:</p>
+                                    <input type="url" id="logoUrl" placeholder="https://..." onchange="loadLogoFromUrl()">
+                                    <div id="logoPreview" class="logo-preview"></div>
+                                </div>
+                            </div>
+
+                            <div class="settings-section">
+                                <h3>Backup Sistema</h3>
+                                <button class="btn btn-primary" onclick="backupSystem()">Fai Backup Completo</button>
+                                <p class="hint-text">Backup conservato in cloud (Supabase Storage)</p>
+                            </div>
+
+                            <div class="settings-section">
+                                <h3>Informazioni Sistema</h3>
+                                <div class="info-box">
+                                    <p><strong>Versione App:</strong> <span id="appVersion">1.0.0</span></p>
+                                    <p><strong>Ultimo Backup:</strong> <span id="lastBackup">--:--</span></p>
+                                    <p><strong>Storage Usato:</strong> <span id="storageUsed">0 MB</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALE CLIENTE -->
+    <div id="customerModal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCustomerModal()">✕</button>
+            <h2>Nuovo Cliente</h2>
+            <form id="customerForm" onsubmit="saveCustomer(event)">
+                <div class="form-group">
+                    <label for="customerName">Nome</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerEmail">Email</label>
+                    <input type="email" id="customerEmail" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Salva</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/admin/js/admin.js"></script>
+    <script src="/admin/js/workshop.js"></script>
+</body>
+</html>
