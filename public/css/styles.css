@@ -1,0 +1,630 @@
+/* ====== VARIABILI COLORI ====== */
+:root {
+  --navy-primary: #0d1333;
+  --gold-accent: #D6a651;
+  --white-pure: #ffffff;
+  --navy-light: #1a2555;
+  --gold-light: #e8dcc8;
+  --text-dark: #0d1333;
+  --text-light: #ffffff;
+  --border-color: #d4d4d4;
+  --shadow: 0 4px 15px rgba(13, 19, 51, 0.15);
+  --shadow-light: 0 2px 8px rgba(13, 19, 51, 0.1);
+}
+
+/* ====== RESET E BASE ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--white-pure);
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ====== CONTENITORE APP ====== */
+#app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ====== SCHERMATE ====== */
+.screen {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.screen.active {
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+/* ====== SCHERMATA CARICAMENTO ====== */
+#loadingScreen {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: linear-gradient(135deg, var(--navy-primary) 0%, var(--navy-light) 100%);
+  color: var(--white-pure);
+}
+
+#loadingScreen p {
+  margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.loader {
+  border: 4px solid var(--gold-light);
+  border-top: 4px solid var(--gold-accent);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ====== SCHERMATA LOGIN ====== */
+#loginScreen {
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, var(--navy-primary) 0%, var(--navy-light) 100%);
+  padding: 20px;
+}
+
+.login-container, .register-container {
+  background: var(--white-pure);
+  border-radius: 20px;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow);
+}
+
+/* ====== LOGO ====== */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 15px;
+  background-color: var(--gold-light);
+  padding: 10px;
+  object-fit: contain;
+}
+
+/* ====== TITOLI ====== */
+.login-container h1, .register-container h1 {
+  text-align: center;
+  color: var(--navy-primary);
+  margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--gold-accent);
+  font-size: 0.95rem;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+/* ====== FORM ====== */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+}
+
+.form-group input {
+  padding: 12px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--gold-accent);
+  background-color: var(--white-pure);
+  box-shadow: 0 0 0 3px rgba(214, 166, 81, 0.1);
+}
+
+/* ====== BOTTONI ====== */
+.btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: var(--gold-accent);
+  color: var(--navy-primary);
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color: #c9964a;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* ====== LINK FOOTER FORM ====== */
+.form-footer, .form-footer-admin {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  margin-top: 10px;
+}
+
+.form-footer a, .form-footer-admin a {
+  color: var(--gold-accent);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.form-footer a:hover, .form-footer-admin a:hover {
+  text-decoration: underline;
+}
+
+.form-footer-admin {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+/* ====== SCHERMATA PRINCIPALE UTENTE ====== */
+#userScreen {
+  display: none;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--white-pure);
+}
+
+#userScreen.active {
+  display: flex;
+}
+
+/* ====== HEADER APP ====== */
+.app-header {
+  background: linear-gradient(135deg, var(--navy-primary) 0%, var(--navy-light) 100%);
+  color: var(--white-pure);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.btn-icon {
+  background: transparent;
+  border: 2px solid var(--white-pure);
+  color: var(--white-pure);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-icon:hover {
+  background: var(--white-pure);
+  color: var(--navy-primary);
+}
+
+/* ====== MAIN APP ====== */
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-section {
+  padding: 20px;
+  background: linear-gradient(135deg, var(--gold-light) 0%, #f5f1ed 100%);
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--navy-primary);
+  font-weight: 500;
+}
+
+/* ====== SEZIONE CARTA ====== */
+.card-section {
+  padding: 30px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.loyalty-card {
+  width: 100%;
+  max-width: 350px;
+  height: 200px;
+  background: linear-gradient(135deg, var(--navy-primary) 0%, var(--navy-light) 100%);
+  border-radius: 20px;
+  padding: 25px;
+  color: var(--white-pure);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.loyalty-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, var(--gold-accent) 0%, transparent 70%);
+  opacity: 0.1;
+  border-radius: 50%;
+}
+
+.loyalty-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(13, 19, 51, 0.25);
+}
+
+.card-logo {
+  display: flex;
+  align-items: center;
+}
+
+.card-logo img {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.card-label {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-bottom: 5px;
+}
+
+.card-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.card-tap {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  position: relative;
+  z-index: 2;
+  text-align: right;
+}
+
+/* ====== MODALE BARCODE ====== */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+  display: none;
+  opacity: 0;
+  z-index: -1;
+}
+
+.modal-content {
+  background: var(--white-pure);
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-dark);
+}
+
+.barcode-modal {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.barcode-container {
+  position: relative;
+  margin: 30px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, var(--navy-primary) 0%, var(--navy-light) 100%);
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+}
+
+.barcode-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100"><rect fill="%23ffffff" opacity="0.05" width="400" height="100"/></svg>');
+  border-radius: 15px;
+}
+
+.barcode-display {
+  position: relative;
+  z-index: 2;
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  border: 3px solid var(--gold-accent);
+}
+
+#ean13Code {
+  font-family: 'Courier New', monospace;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--navy-primary);
+  letter-spacing: 5px;
+  word-break: break-all;
+}
+
+.barcode-hint {
+  color: var(--text-dark);
+  font-size: 0.9rem;
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+/* ====== SEZIONE PUNTI ====== */
+.points-section {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.points-card {
+  width: 100%;
+  max-width: 350px;
+  background: linear-gradient(135deg, var(--gold-accent) 0%, #c9964a 100%);
+  border-radius: 15px;
+  padding: 25px;
+  text-align: center;
+  color: var(--navy-primary);
+  box-shadow: var(--shadow);
+}
+
+.points-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  opacity: 0.9;
+  margin-bottom: 10px;
+}
+
+.points-total {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--navy-primary);
+  margin-bottom: 10px;
+}
+
+.points-hint {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.points-section.hidden {
+  display: none;
+}
+
+/* ====== NAVIGAZIONE INFERIORE ====== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--white-pure);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  z-index: 150;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.nav-item .icon {
+  font-size: 1.5rem;
+}
+
+.nav-item.active {
+  color: var(--gold-accent);
+  background: rgba(214, 166, 81, 0.1);
+  border-radius: 10px;
+}
+
+.nav-item:active {
+  transform: scale(0.95);
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 600px) {
+  .login-container, .register-container {
+    padding: 30px 20px;
+  }
+
+  .logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .loyalty-card {
+    height: 180px;
+    padding: 20px;
+  }
+
+  #ean13Code {
+    font-size: 2rem;
+    letter-spacing: 3px;
+  }
+
+  .points-total {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .login-container, .register-container {
+    padding: 25px 15px;
+  }
+
+  .login-container h1, .register-container h1 {
+    font-size: 1.7rem;
+  }
+
+  .form-group input {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+
+  .loyalty-card {
+    height: 160px;
+    padding: 15px;
+  }
+
+  .card-name {
+    font-size: 1.1rem;
+  }
+
+  .points-card {
+    padding: 20px;
+  }
+
+  .points-total {
+    font-size: 2rem;
+  }
+}
+
+/* ====== UTILITIES ====== */
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
+}
